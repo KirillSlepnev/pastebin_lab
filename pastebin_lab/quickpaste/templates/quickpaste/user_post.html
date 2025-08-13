@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="paste-container">
+    {% if post.author %}
+        <h1 class="paste-title">Пост пользователя {{ post.author }}</h1>
+    {% else %}
+        <h1 class="paste-title">Пост анонимного пользователя</h1>
+    {% endif %}
+    <div class="lang-container">
+        <p class="selected_lang">{{ post.get_language_display }}</p>
+    </div>
+    <textarea class="paste-textarea">{{ post.content }}</textarea>
+</div>
+{% endblock %}

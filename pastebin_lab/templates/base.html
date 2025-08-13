@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickPaste</title>
+    <link rel="stylesheet" href="{% static 'quickpaste/css/styles.css' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'quickpaste/images/logo.png' %}">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header>
+            <nav class="navbar">
+                <div class="navbar-left">
+                    <a href="/" class="logo">
+                        <img
+                                src="{% static 'quickpaste/images/logo.png' %}"
+                                alt="QuickPaste"
+                                class="logo-image">
+                    </a>
+                    <span>|</span>
+                        <a href="/">Главная</a>
+                        <a href="{% url 'contacts' %}">Контакты</a>
+                </div>
+                <div class="navbar-right">
+                    <a href="{% url 'login' %}" class="auth-link">Вход</a>
+                    <a href="{% url 'register' %}" class="auth-link">Регистрация</a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="content-container">
+            <div class="profile">
+                <img
+                        src="{% static 'quickpaste/images/empty_avatar.jpg'%}"
+                        width="170"
+                        height="170"
+                        alt="User-avatar"
+                        class="user-avatar">
+
+                <h3 class="username" align="center">Username</h3>
+                <p class="registration-date">DD.MM.YYYY</p>
+                <a href="#" class="btn-posts">Посты пользователя</a>
+            </div>
+
+            <main class="main-content">
+                {% block content %}
+                {% endblock %}
+            </main>
+
+            <div class="popular-posts">
+                <table class="table">
+                    <colgroup>
+                        <col style="width: 40%">
+                        <col style="width: 40%">
+                        <col style="width: 20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Посты</th>
+                            <th>Ссылка</th>
+                            <th>Популярность</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Пост 1</td>
+                            <td>Ссылка 1</td>
+                            <td>Переходов по ссылке</td>
+                        </tr>
+                        <tr>
+                            <td>Пост 2</td>
+                            <td>Ссылка 2</td>
+                            <td>Переходов по ссылке</td>
+                        </tr>
+                        <tr>
+                            <td>Пост 3</td>
+                            <td>Ссылка 3</td>
+                            <td>Переходов по ссылке</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 QuickPaste</p>
+        </footer>
+    </div>
+</body>
+</html>
