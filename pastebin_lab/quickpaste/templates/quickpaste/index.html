@@ -3,24 +3,14 @@
 <div class="paste-container">
     <h1 class="paste-title">QuickPaste</h1>
 
-<!--    <textarea class="paste-textarea" placeholder="Вставьте ваш текст здесь..."></textarea>-->
-
-    <div class="paste-actions">
-        <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.content }}
-            {{ form.photo }}
-            {{ form.time_life }}
-            {{ form.publicity.label }} {{ form.publicity }}
-
-            <div class="text-type-selector">
-                {{ form.language }}
-                <span class="select-arrow">▼</span>
-            </div>
-
-            <button type="submit" class="btn">Сохранить</button>
-        </form>
-
-    </div>
+    <form class="post-form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error" >{{ form.non_field_errors }}</div>
+        {% for f in form %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+        <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit" class="btn">Сохранить</button>
+    </form>
 </div>
 {% endblock %}

@@ -21,7 +21,7 @@ class Post(models.Model):
     author = models.CharField(max_length=100,
                               blank=True,
                               verbose_name='Автор',
-                              default='',
+                              default=None,
                               )
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/",
                               default=None,

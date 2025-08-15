@@ -1,43 +1,33 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, CreateView
 
 from .forms import PostForm
 from .models import Post
+from .utils import DataMixin
 
 
-def show_main_page(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save()
-            return redirect(post.get_absolute_url())
-    else:
-        form = PostForm()
-
-    return render(request, 'quickpaste/index.html', {'form': form})
+class MainPage(DataMixin, CreateView):
+    form_class = PostForm
+    template_name = 'quickpaste/index.html'
+    success_url = reverse_lazy('main')
+    title_page = 'QuickPaste'
 
 
 def show_contacts(request):
     return render(request, 'quickpaste/contacts.html')
 
 
-def show_post(request, user_slug):
-    post = get_object_or_404(Post, slug=user_slug)
-    return render(request, 'quickpaste/user_post.html', {'post': post})
+class ShowPost(DataMixin, DetailView):
+    model = Post
+    template_name = 'quickpaste/user_post.html'
+    slug_url_kwarg = 'user_slug'
 
-
-def save_post(request, user_slug):
-    post = get_object_or_404(Post, slug=user_slug)
-    post_url = request.build_absolute_uri(
-        reverse('show_post', kwargs={'user_slug': post.slug})
-    )
-    return render(request, 'quickpaste/save_post.html',
-                  {'post': post, 'full_post_url': post_url})
-
-
-def login(request):
-    return render(request, 'quickpaste/login.html')
-
-
-def register(request):
-    return render(request, 'quickpaste/login.html')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_author = Post.objects.get(slug=self.kwargs['user_slug']).author
+        if post_author:
+            context['title'] = 'Пост ' + post_author
+        else:
+            context['title'] = 'Пост анонимного пользователя'
+        return context

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickPaste</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'quickpaste/css/styles.css' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'quickpaste/images/logo.png' %}">
 </head>
@@ -21,12 +21,15 @@
                                 class="logo-image">
                     </a>
                     <span>|</span>
-                        <a href="/">Главная</a>
-                        <a href="{% url 'contacts' %}">Контакты</a>
+<!--                        <a href="/">Главная</a>-->
+<!--                        <a href="{% url 'contacts' %}">Контакты</a>-->
+                    {% for m in menu %}
+                    <a href="{% url m.url_name %}">{{ m.title }}</a>
+                    {% endfor %}
                 </div>
                 <div class="navbar-right">
-                    <a href="{% url 'login' %}" class="auth-link">Вход</a>
-                    <a href="{% url 'register' %}" class="auth-link">Регистрация</a>
+                    <a href="{% url 'users:login' %}" class="auth-link">Вход</a>
+                    <a href="{% url 'users:register' %}" class="auth-link">Регистрация</a>
                 </div>
             </nav>
         </header>
